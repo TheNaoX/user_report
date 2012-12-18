@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
     self.worked_hours * self.rate
   end
 
-  def self.total_amount
-    Employee.all.map { |e| e.account.salary}.sum
+  def self.total_amount(employees = nil)
+    employees.map { |e| e.account.salary }.sum
   end
 end

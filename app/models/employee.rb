@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
 
   accepts_nested_attributes_for :account
 
+  scope :search, lambda { |q| where('firstname LIKE ?', q) }
 
   def self.csv_report
     string_report = CSV.generate do |row|
