@@ -16,11 +16,12 @@
     %tr
       %td= e.id
       %td= "#{e.firstname} #{e.lastname}"
-      %td= e.account_number
-      %td= e.rate
-      %td= e.hours_week
-      %td= e.worked_hours
-      %td= e.salary
+      - unless e.account.nil?
+        %td= e.account.account_number
+        %td= e.account.rate
+        %td= e.account.hours_week
+        %td= e.account.worked_hours
+        %td= e.account.salary
       %td= link_to "edit", edit_employee_path(e.id)
   %tr
     %td

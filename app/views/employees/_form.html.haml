@@ -16,23 +16,24 @@
     .controls
       = f.text_field :lastname 
 
-  .control-group
-    = f.label :account_number, class: "control-label"
-    .controls
-      = f.text_field :account_number
+  = fields_for :account do |a|
+    .control-group
+      = a.label :account_number, class: "control-label"
+      .controls
+        = a.text_field :account_number
 
-  .control-group
-    = f.label :rate, class: "control-label"
-    .controls
-      = f.text_field :rate
+    .control-group
+      = a.label :rate, class: "control-label"
+      .controls
+        = a.text_field :rate
 
-  .control-group
-    = f.label :hours_week, class: "control-label"
-    .controls
-      = f.text_field :hours_week
+    .control-group
+      = a.label :hours_week, class: "control-label"
+      .controls
+        = a.text_field :hours_week
 
-  .control-group
-    = f.label :worked_hours, class: "control-label"
-    .controls
-      = f.text_field :worked_hours
+    .control-group
+      = a.label :worked_hours, class: "control-label"
+      .controls
+        = a.text_field :worked_hours
   = f.submit

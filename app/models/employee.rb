@@ -1,28 +1,18 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :firstname, :lastname, :account_number, :rate, :hours_week, :worked_hours
+  attr_accessible :firstname, :lastname
 
-  validates_presence_of :firstname, :lastname, :account_number, :rate, :hours_week
+  validates_presence_of :firstname, :lastname
 
-  validates_uniqueness_of :account_number
+  has_one :account
 
-  validates :account_number, format: { 
-    with: /^?[0-9]{16}/,
-    message: "The account number should be 16 digits, letters and symbols not required"
-  }
+  accepts_nested_attributes_for :account
 
-  def salary
-    self.worked_hours * self.rate
-  end
-
-  def self.total_amount
-    Employee.all.map(&:salary).sum
-  end
 
   def self.csv_report
     string_report = CSV.generate do |row|
       row << ["ID", "Fullname",	"Account number",	"Rate",	"Hours week",	"hours worked",	"Salary"]
       Employee.all.each do |employee|
-        row << [employee.id, "#{employee.firstname} #{employee.lastname}", employee.account_number, employee.rate, employee.hours_week, employee.worked_hours, employee.salary]
+        row << [employee.id, "#{employee.firstname} #{employee.lastname}", employee.account.account_number, employee.account.rate, employee.account.hours_week, employee.account.worked_hours, employee.account.salary]
       end
       row << [" "," "," "," "," ","Total: ", Employee.total_amount]
     end

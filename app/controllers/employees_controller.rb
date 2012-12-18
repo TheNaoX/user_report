@@ -6,6 +6,7 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(params[:employee])
+    @employee.account = Account.new(params[:account])
     respond_to do |format|
       if @employee.save
         format.html { redirect_to root_path, notice: 'Employee was successfully created.' }                                                                   
@@ -19,10 +20,12 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @account = @employee.account
   end
   
   def update
     @employee = Employee.find(params[:id])
+    @employee.account = Account.find_or_create_by_account_number(params[:account])
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
         format.html { redirect_to root_path, notice: 'Employee was successfully updated.' }                                                                   
